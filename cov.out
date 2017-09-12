@@ -1,0 +1,16 @@
+mode: set
+github.com/kasperlewau/pool/pool.go:16.36,26.31 3 1
+github.com/kasperlewau/pool/pool.go:47.2,47.13 1 1
+github.com/kasperlewau/pool/pool.go:26.31,27.13 1 1
+github.com/kasperlewau/pool/pool.go:27.13,30.8 3 1
+github.com/kasperlewau/pool/pool.go:30.8,31.12 1 1
+github.com/kasperlewau/pool/pool.go:32.24,34.20 2 1
+github.com/kasperlewau/pool/pool.go:37.6,37.16 1 1
+github.com/kasperlewau/pool/pool.go:40.6,41.20 2 1
+github.com/kasperlewau/pool/pool.go:34.20,36.7 0 0
+github.com/kasperlewau/pool/pool.go:37.16,39.7 1 1
+github.com/kasperlewau/pool/pool.go:50.23,52.2 1 1
+github.com/kasperlewau/pool/pool.go:54.28,57.2 2 1
+github.com/kasperlewau/pool/pool.go:59.24,60.12 1 1
+github.com/kasperlewau/pool/pool.go:60.12,61.7 1 1
+github.com/kasperlewau/pool/pool.go:61.7,63.4 1 1
