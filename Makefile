@@ -1,3 +1,5 @@
+default:
+	go test -v -race
 test:
 	go test -v -race
 cover:
