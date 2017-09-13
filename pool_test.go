@@ -3,6 +3,7 @@ package pool
 import (
 	"fmt"
 	"testing"
+	"time"
 )
 
 var pooltests = []struct {
@@ -25,6 +26,13 @@ func TestPool(t *testing.T) {
 			p := New(tt.workers, tt.queue)
 			for i := 0; i < tt.queue; i++ {
 				p.Add(func() (interface{}, error) { return i, nil })
+			}
+			time.Sleep(100 * time.Millisecond)
+			if len(p.Workers) != tt.workers {
+				t.Errorf("Expected pool to have spun up %v workers. have %v", tt.workers, len(p.Workers))
+			}
+			if len(p.Tasks) != tt.queue {
+				t.Errorf("Expected pool to have queued %v tasks. have %v", tt.queue, len(p.Tasks))
 			}
 			p.Start()
 			p.Wait()
