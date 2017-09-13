@@ -1,11 +1,15 @@
+// package pool provides a simple worker pool
 package pool
 
 import (
 	"sync"
 )
 
+// Task describes a function that can return any value, followed by an error
 type Task func() (interface{}, error)
 
+// Pool holds a collection of worker goroutines,
+// executing all of the incoming Tasks as workers become available
 type Pool struct {
 	wg      *sync.WaitGroup
 	Tasks   chan Task
@@ -13,6 +17,11 @@ type Pool struct {
 	Results chan interface{}
 }
 
+// New returns a new Pool
+//
+// workers sets the concurrency at which to work
+//
+// tasks sets the size of our Task queue
 func New(workers, tasks int) *Pool {
 	var wg sync.WaitGroup
 
@@ -47,15 +56,18 @@ func New(workers, tasks int) *Pool {
 	return pool
 }
 
+// Wait for all Tasks to be processed
 func (p *Pool) Wait() {
 	p.wg.Wait()
 }
 
+// Add a new Task to the Pool
 func (p *Pool) Add(t Task) {
 	p.Tasks <- t
 	p.wg.Add(1)
 }
 
+// Start working through the Task queue
 func (p *Pool) Start() {
 	go func() {
 		for {
