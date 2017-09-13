@@ -1,4 +1,4 @@
-// package pool provides a simple worker pool
+// Package pool provides a simple worker pool
 package pool
 
 import (
