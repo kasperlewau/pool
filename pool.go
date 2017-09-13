@@ -4,13 +4,13 @@ import (
 	"sync"
 )
 
-type Task func() (int, error)
+type Task func() (interface{}, error)
 
 type Pool struct {
 	wg      *sync.WaitGroup
 	Tasks   chan Task
 	Workers chan chan Task
-	Results chan int
+	Results chan interface{}
 }
 
 func New(workers, tasks int) *Pool {
@@ -20,7 +20,7 @@ func New(workers, tasks int) *Pool {
 		wg:      &wg,
 		Tasks:   make(chan Task, tasks),
 		Workers: make(chan chan Task, workers),
-		Results: make(chan int),
+		Results: make(chan interface{}),
 	}
 
 	for i := 0; i < workers; i++ {

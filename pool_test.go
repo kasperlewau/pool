@@ -24,7 +24,7 @@ func TestPool(t *testing.T) {
 		t.Run(title, func(t *testing.T) {
 			p := New(tt.workers, tt.queue)
 			for i := 0; i < tt.queue; i++ {
-				p.Add(func() (int, error) { return i, nil })
+				p.Add(func() (interface{}, error) { return i, nil })
 			}
 			p.Start()
 			p.Wait()
@@ -46,7 +46,7 @@ func BenchmarkPool(b *testing.B) {
 			for i := 0; i < b.N; i++ {
 				p := New(tt.workers, tt.queue)
 				for i := 0; i < tt.queue; i++ {
-					p.Add(func() (int, error) { return i, nil })
+					p.Add(func() (interface{}, error) { return i, nil })
 				}
 				p.Start()
 				p.Wait()
