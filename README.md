@@ -6,4 +6,4 @@
 go get github.com/kasperlewau/pool
 ```
 
-## [docs](godoc.org/github.com/kasperlewau/pool)
+## [docs](https://godoc.org/github.com/kasperlewau/pool)
