@@ -17,17 +17,17 @@ type Pool struct {
 	Results chan interface{}
 }
 
-// New returns a new Pool
+// New returns a new Pool.
 //
-// workers sets the concurrency at which to work
+// workers sets the concurrency at which to work.
 //
-// tasks sets the size of our Task queue
-func New(workers, tasks int) *Pool {
+// queue sets the size of our Task queue.
+func New(workers, queue int) *Pool {
 	var wg sync.WaitGroup
 
 	pool := &Pool{
 		wg:      &wg,
-		Tasks:   make(chan Task, tasks),
+		Tasks:   make(chan Task, queue),
 		Workers: make(chan chan Task, workers),
 		Results: make(chan interface{}),
 	}
