@@ -5,8 +5,14 @@ import (
 	"sync"
 )
 
-// Task describes a function that can return any value, followed by an error
+// Task describes a function that returns a value of any type & an error
 type Task func() (interface{}, error)
+
+// Result describes the values coming out of the Pool results channel
+type Result struct {
+	Value interface{}
+	Err   error
+}
 
 // Pool holds a collection of worker goroutines,
 // executing all of the incoming Tasks as workers become available
@@ -14,7 +20,7 @@ type Pool struct {
 	wg      *sync.WaitGroup
 	Tasks   chan Task
 	Workers chan chan Task
-	Results chan interface{}
+	Results chan Result
 }
 
 // New returns a new Pool.
@@ -29,7 +35,7 @@ func New(workers, queue int) *Pool {
 		wg:      &wg,
 		Tasks:   make(chan Task, queue),
 		Workers: make(chan chan Task, workers),
-		Results: make(chan interface{}),
+		Results: make(chan Result),
 	}
 
 	for i := 0; i < workers; i++ {
@@ -40,11 +46,8 @@ func New(workers, queue int) *Pool {
 				select {
 				case t := <-worker:
 					res, err := t()
-					if err != nil {
-						// what to do if err?
-					}
 					go func() {
-						pool.Results <- res
+						pool.Results <- Result{Value: res, Err: err}
 					}()
 					pool.Workers <- worker
 					pool.wg.Done()
