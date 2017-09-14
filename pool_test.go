@@ -1,7 +1,8 @@
-package pool
+package pool_test
 
 import (
 	"fmt"
+	"github.com/kasperlewau/pool"
 	"testing"
 	"time"
 )
@@ -21,7 +22,7 @@ func TestPool(t *testing.T) {
 	for _, tt := range pooltests {
 		title := fmt.Sprintf("%v workers & %v tasks", tt.workers, tt.queue)
 		t.Run(title, func(t *testing.T) {
-			p := New(tt.workers, tt.queue)
+			p := pool.New(tt.workers, tt.queue)
 			for i := 0; i < tt.queue; i++ {
 				p.Add(func() (interface{}, error) { return i, nil })
 			}
@@ -50,7 +51,7 @@ func BenchmarkPool(b *testing.B) {
 		title := fmt.Sprintf("%v workers & %v tasks", tt.workers, tt.queue)
 		b.Run(title, func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
-				p := New(tt.workers, tt.queue)
+				p := pool.New(tt.workers, tt.queue)
 				for i := 0; i < tt.queue; i++ {
 					p.Add(func() (interface{}, error) { return i, nil })
 				}
