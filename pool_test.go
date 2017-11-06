@@ -43,13 +43,14 @@ var poolbenchmarks = []struct {
 	workers int
 	queue   int
 }{
-	{100, 1000},
+	{10, 100},
 }
 
 func BenchmarkPool(b *testing.B) {
 	for _, tt := range poolbenchmarks {
 		title := fmt.Sprintf("%v workers & %v tasks", tt.workers, tt.queue)
 		b.Run(title, func(b *testing.B) {
+			b.ReportAllocs()
 			for i := 0; i < b.N; i++ {
 				p := pool.New(tt.workers, tt.queue)
 				for i := 0; i < tt.queue; i++ {
